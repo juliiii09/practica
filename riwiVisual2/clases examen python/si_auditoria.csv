@@ -1,0 +1,4 @@
+timestamp,actor,accion,detalle
+2025-11-24T13:20:12.046426,system,crear_usuario,admin rol=ADMIN
+2025-11-24T13:20:27.101032,admin,login,login correcto
+2025-11-24T13:21:54.243924,system,crear_usuario,juan rol=ADMIN

@@ -1,0 +1,2 @@
+order_id,items_json,total,date,estado
+1,"[{""product_id"": ""1"", ""name"": ""papas"", ""qty"": 1, ""price"": 2000.0}]",2000.0,2025-11-24,COMPLETADO

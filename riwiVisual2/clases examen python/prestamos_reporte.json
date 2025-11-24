@@ -1,0 +1,26 @@
+[
+  {
+    "prestamo_id": "1",
+    "equipo_id": "3",
+    "usuario": "juli",
+    "tipo_usuario": "ADMINISTRATIVO",
+    "fecha_solicitud": "2025-11-24",
+    "fecha_inicio": "",
+    "fecha_fin": "",
+    "dias": "",
+    "retraso": "",
+    "estado": "PENDIENTE"
+  },
+  {
+    "prestamo_id": "2",
+    "equipo_id": "2",
+    "usuario": "juan",
+    "tipo_usuario": "ESTUDIANTE",
+    "fecha_solicitud": "2025-11-24",
+    "fecha_inicio": "",
+    "fecha_fin": "",
+    "dias": "",
+    "retraso": "",
+    "estado": "PENDIENTE"
+  }
+]

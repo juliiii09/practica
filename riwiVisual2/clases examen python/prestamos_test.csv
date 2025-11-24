@@ -1,0 +1,4 @@
+prestamo_id,equipo_id,usuario,tipo_usuario,fecha_solicitud,fecha_inicio,fecha_fin,dias,retraso,estado
+1,1,Ana,ESTUDIANTE,2025-11-24,,,,,PENDIENTE
+2,2,Luis,ESTUDIANTE,2025-11-24,2025-11-14,2025-11-24,10,7,DEVUELTO
+3,3,María,INSTRUCTOR,2025-11-24,2025-11-23,,7,,APROBADO

@@ -1,0 +1,4 @@
+equipo_id,nombre_equipo,categoria,estado_actual,fecha_registro
+1,Portatil A,Computo,DISPONIBLE,2025-01-01
+2,Camara,Multimedia,DISPONIBLE,2025-01-01
+3,Microscopio,Lab,DISPONIBLE,2025-01-01

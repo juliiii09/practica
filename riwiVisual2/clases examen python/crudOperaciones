@@ -1,0 +1,126 @@
+# math_crud.py
+# CRUD de inventario + operaciones matemáticas con cantidades
+import csv, os
+from datetime import datetime
+
+FILE = "math_inventario.csv"
+FIELDS = ["id","nombre","cantidad"]
+
+# --- helpers básicos ---
+def asegurar():
+    if not os.path.exists(FILE):
+        with open(FILE, "w", newline="", encoding="utf-8") as f:
+            writer = csv.writer(f)
+            writer.writerow(FIELDS)
+
+def leer_todo():
+    if not os.path.exists(FILE): return []
+    with open(FILE, newline="", encoding="utf-8") as f:
+        return list(csv.DictReader(f))
+
+def escribir_todo(lista):
+    with open(FILE, "w", newline="", encoding="utf-8") as f:
+        w = csv.DictWriter(f, fieldnames=FIELDS); w.writeheader()
+        for item in lista: w.writerow(item)
+
+def next_id(lista):
+    ids=[int(x["id"]) for x in lista] if lista else []
+    return str(max(ids)+1) if ids else "1"
+
+# --- CRUD ---
+def crear():
+    lista = leer_todo()
+    nid = next_id(lista)
+    nombre = input("Nombre: ").strip()
+    cantidad = input("Cantidad (número): ").strip()
+    # validación simple
+    try:
+        int(cantidad)
+    except:
+        print("Cantidad inválida. Se guarda 0.")
+        cantidad = "0"
+    lista.append({"id":nid,"nombre":nombre,"cantidad":cantidad})
+    escribir_todo(lista); print("Creado.")
+
+def leer():
+    for r in leer_todo(): print(r)
+
+def actualizar():
+    lista = leer_todo()
+    idb = input("ID a actualizar: ").strip()
+    for item in lista:
+        if item["id"]==idb:
+            nuevo = input("Nuevo nombre (enter para no cambiar): ").strip()
+            cant = input("Nueva cantidad (enter para no cambiar): ").strip()
+            if nuevo: item["nombre"]=nuevo
+            if cant:
+                try: item["cantidad"]=str(int(cant))
+                except: print("Cantidad inválida - no cambio")
+            escribir_todo(lista); print("Actualizado."); return
+    print("No encontrado")
+
+def eliminar():
+    lista = leer_todo()
+    idb = input("ID a eliminar: ").strip()
+    n=[x for x in lista if x["id"]!=idb]
+    if len(n)==len(lista): print("No existe")
+    else:
+        escribir_todo(n); print("Eliminado")
+
+# --- OPERACIONES MATEMÁTICAS SOBRE CANTIDADES ---
+def operar():
+    lista = leer_todo()
+    idb = input("ID sobre el que operar: ").strip()
+    item = next((x for x in lista if x["id"]==idb), None)
+    if not item: print("No encontrado"); return
+    print("Objeto:", item)
+    print("Operaciones: +  -  *  /  (sumar, restar, multiplicar, dividir)")
+    op = input("Elige operación (+,-,*,/): ").strip()
+    val = input("Valor numérico: ").strip()
+    try:
+        valn = float(val)
+    except:
+        print("Valor inválido"); return
+    try:
+        base = float(item["cantidad"])
+    except:
+        print("Cantidad base inválida"); return
+    res = None
+    if op=='+': res = base + valn
+    elif op=='-': res = base - valn
+    elif op=='*': res = base * valn
+    elif op=='/':
+        if valn==0: print("División por 0"); return
+        res = base / valn
+    else:
+        print("Operación inválida"); return
+    item["cantidad"] = str(int(res) if res.is_integer() else str(res))
+    escribir_todo(lista)
+    print("Resultado guardado:", item)
+
+def total_sum():
+    lista = leer_todo()
+    total = 0
+    for x in lista:
+        try: total += float(x["cantidad"])
+        except: pass
+    print("Total de cantidades (suma):", total)
+
+# --- menú ---
+def menu():
+    asegurar()
+    while True:
+        print("\n--- MATH CRUD ---")
+        print("1 Crear 2 Leer 3 Actualizar 4 Eliminar 5 Operar 6 Total 0 Salir")
+        op = input("Opción: ").strip()
+        if op=="1": crear()
+        elif op=="2": leer()
+        elif op=="3": actualizar()
+        elif op=="4": eliminar()
+        elif op=="5": operar()
+        elif op=="6": total_sum()
+        elif op=="0": break
+        else: print("Inválido")
+
+if __name__=="__main__":
+    menu()
